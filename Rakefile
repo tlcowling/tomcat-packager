@@ -27,6 +27,9 @@ task :download do
     }) do |file|
       file << open('http://www.whoishostingthis.com/mirrors/apache/tomcat/tomcat-7/v7.0.56/bin/apache-tomcat-7.0.56.tar.gz').read
     end
+
+    system 'mkdir -p downloads/tomcat7 && tar xzvf downloads/tomcat7.tar.gz -C downloads/tomcat7 --strip-components=1'
+  
 end
 
 desc 'Clean tars'
