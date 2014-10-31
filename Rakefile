@@ -32,6 +32,12 @@ task :download do
   
 end
 
+task :verify_md5 do
+  downloaded_md5 = Digest::MD5.file('./downloads/tomcat7.tar.gz').hexdigest
+  expected_md5 = `grep -Eo '^[^ ]+' downloads/tomcat7.tar.gz.md5`.strip
+  fail("Not building since md5 sums do not match, #{downloaded_md5} not equal to expected md5sum #{expected_md5}") unless downloaded_md5.eql? expected_md5
+end
+
 desc 'Clean tars'
 task :clean do
   puts 'Removing previous downloads and previous packages'
@@ -40,6 +46,6 @@ task :clean do
 end
 
 desc 'Build tomcat package'
-task :build do
+task :build => :verify_md5 do
   system 'fpm -s dir  -t deb --name=tomcat --version=7.0.56 --force --before-install=scripts/before-install.sh --after-remove=scripts/after-remove.sh --architecture=amd64 --deb-user=tomcat7 --deb-group=tomcat7 --prefix=/var/lib/ --deb-init=etc/init.d/tomcat7 --deb-default=etc/default/tomcat7 ./downloads/tomcat7'
 end
