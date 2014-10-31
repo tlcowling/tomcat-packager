@@ -32,13 +32,20 @@ task :download do
   
 end
 
+desc 'Verify download integrity'
 task :verify_md5 do
   downloaded_md5 = Digest::MD5.file('./downloads/tomcat7.tar.gz').hexdigest
   expected_md5 = `grep -Eo '^[^ ]+' downloads/tomcat7.tar.gz.md5`.strip
   fail("Not building since md5 sums do not match, #{downloaded_md5} not equal to expected md5sum #{expected_md5}") unless downloaded_md5.eql? expected_md5
 end
 
-desc 'Clean tars'
+desc 'Verify download authenticity'
+task :verify_pgp do
+  #pgp_key = `gpg downloads/tomcat7.tar.gz.asc | awk '{print $14}'`
+  #p pgp_key
+end
+
+desc 'Clean downloads folder and previous packages'
 task :clean do
   puts 'Removing previous downloads and previous packages'
   FileUtils.rm_rf(Dir.glob('downloads/*'))
