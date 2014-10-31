@@ -23,8 +23,8 @@ end
 desc 'Clean tars'
 task :clean do
   puts 'Removing previous downloads and previous packages'
-  system 'rm ./downloads/*'
-  system 'rm ./pkg/*'
+  FileUtils.rm_rf(Dir.glob('downloads/*'))
+  FileUtils.rm_rf(Dir.glob('./*.deb'))
 end
 
 desc 'Build tomcat package'
