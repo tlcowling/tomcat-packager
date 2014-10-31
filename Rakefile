@@ -1,6 +1,7 @@
-desc 'Download tomcat7 and make a debian of it'
-task :default => [ :clean, :fetch, :build ]
+task :default => :package
 
+desc 'Download tomcat7 and package it as a debian'
+task :package => [:clean, :fetch, :build]
 
 desc 'Download packages' 
 task :fetch do
