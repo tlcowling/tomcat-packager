@@ -23,13 +23,17 @@ Use rake to download packages, then build them.  Output is currently a deb file
 
 ``rake package``
 
+Then you'll want to apt-get install tomcat, once you've hosted it!  Recommend [aptly](http://www.aptly.info)
+
 ## Caveats
 
 Manage Java yourself separately.  Ubuntu tomcat packages have a hard dependency on openjdk 6, sometimes we need to use the Oracle one...  
 
 ## Future stuff? (todo)
 Use pgp to verify the download
-Make the hard
+Make the hardcoded paths less hardcoded
+Add a LICENSE to the deb
+Add a maintainer explicitly
 Might get you a different tomcat version...
 Might also be able to make you a yum package...
 Might prompt you for info...
