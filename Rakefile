@@ -3,10 +3,11 @@ require 'open-uri'
 task :default => :package
 
 desc 'Download tomcat7 and package it as a debian'
-task :package => [:clean, :fetch, :build]
+task :package => [:clean, :download, :build]
 
 desc 'Download packages' 
-task :fetch do
+task :download do
+  puts 'Download in progress...'
   open('./downloads/tomcat7.tar.gz.asc', 'wb') do |file|
     file << open('https://www.apache.org/dist/tomcat/tomcat-7/v7.0.56/bin/apache-tomcat-7.0.56.tar.gz.asc').read
   end
@@ -16,14 +17,30 @@ task :fetch do
   open('./downloads/tomcat7.tar.gz', 'wb') do |file|
     file << open('http://www.whoishostingthis.com/mirrors/apache/tomcat/tomcat-7/v7.0.56/bin/apache-tomcat-7.0.56.tar.gz').read
   end
+  puts 'Download complete...'
 end
 
 desc 'Clean tars'
 task :clean do
-  system 'rm -iv ./pkg/*'
+  puts 'Removing previous downloads and previous packages'
+  system 'rm ./downloads/*'
+  system 'rm ./pkg/*'
 end
 
 desc 'Build tomcat package'
 task :build do
-
+  system 'fpm -s dir \
+    -t deb \
+    --name=tomcat \
+    --version=7.0.56 \
+    --force \
+    --before-install=before-install.sh \
+    --after-remove=after-remove.sh \
+    --architecture=amd64 \
+    --deb-user=tomcat7 \
+    --deb-group=tomcat7 \
+    --prefix=/var/lib/ \
+    --deb-init=etc/init.d/tomcat7 \
+    --deb-default=etc/default/tomcat7
+    ./downloads/tomcat7'
 end
