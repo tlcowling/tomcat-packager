@@ -1,6 +1,12 @@
 require 'open-uri'
 require 'progressbar'
 
+begin
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec)
+rescue LoadError
+end
+
 task :default => :package
 
 desc 'Download tomcat7 and package it as a debian'
