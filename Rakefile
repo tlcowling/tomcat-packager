@@ -34,7 +34,7 @@ task :download do
       file << open('http://www.whoishostingthis.com/mirrors/apache/tomcat/tomcat-7/v7.0.56/bin/apache-tomcat-7.0.56.tar.gz').read
     end
 
-    system 'mkdir -p downloads/tomcat7 && tar xzf downloads/tomcat7.tar.gz -C downloads/tomcat7 --strip-components=1'
+    system 'mkdir -p downloads/tomcat && tar xzf downloads/tomcat7.tar.gz -C downloads/tomcat --strip-components=1'
   
 end
 
@@ -60,5 +60,5 @@ end
 
 desc 'Build tomcat package'
 task :build => :verify_md5 do
-  system 'fpm -s dir  -t deb --name=tomcat --description="Servlet and JSP engine" --version=7.0.56 --force --before-install=scripts/before-install.sh --after-remove=scripts/after-remove.sh --architecture=amd64 --deb-user=tomcat --deb-group=tomcat --prefix=/var/lib/ --deb-init=etc/init.d/tomcat --deb-default=etc/default/tomcat ./downloads/tomcat7=./'
+  system 'fpm -s dir  -t deb --name=tomcat --description="Servlet and JSP engine" --version=7.0.56 --force --before-install=scripts/before-install.sh --after-remove=scripts/after-remove.sh --architecture=amd64 --deb-user=tomcat --deb-group=tomcat --prefix=/var/lib/ --deb-init=etc/init.d/tomcat --deb-default=etc/default/tomcat ./downloads/tomcat=./'
 end

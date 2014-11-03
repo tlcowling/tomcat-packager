@@ -51,8 +51,8 @@ fi
 # The following variables can be overwritten in $DEFAULT
 
 # Run Tomcat as this user ID and group ID
-TOMCAT_USER=tomcat7
-TOMCAT_GROUP=tomcat7
+TOMCAT_USER=tomcat
+TOMCAT_GROUP=tomcat
 
 # this is a work-around until there is a suitable runtime replacement 
 # for dpkg-architecture for arch:all packages
@@ -90,7 +90,7 @@ done
 export JAVA_HOME
 
 # Directory where the Tomcat 6 binary distribution resides
-CATALINA_HOME=/usr/share/$NAME
+CATALINA_HOME=/var/lib/$NAME
 
 # Directory for per-instance configuration files and webapps
 CATALINA_BASE=/var/lib/$NAME
@@ -204,7 +204,7 @@ case "$1" in
 		echo "// AUTO-GENERATED FILE from /etc/tomcat/policy.d/" \
 			> "$POLICY_CACHE"
 		echo ""  >> "$POLICY_CACHE"
-		cat $CATALINA_BASE/conf/policy.d/*.policy \
+		cat $CATALINA_BASE/conf/*.policy \
 			>> "$POLICY_CACHE"
 
 		# Remove / recreate JVM_TMP directory
