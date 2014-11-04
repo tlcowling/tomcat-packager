@@ -4,5 +4,5 @@
 #
 set -e
 
-id -u tomcat7 &>/dev/null || sudo useradd tomcat7
-id --group tomcat7 &>/dev/null || sudo groupadd tomcat7
+id -u tomcat &>/dev/null || sudo useradd tomcat
+id --group tomcat &>/dev/null || sudo groupadd tomcat
