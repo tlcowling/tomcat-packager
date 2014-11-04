@@ -4,5 +4,6 @@
 #
 set -e
 
-
-service tomcat stop
+if [ ! -f /etc/init/tomcat.conf ]; then
+  service tomcat stop
+fi
