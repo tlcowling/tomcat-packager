@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Deletes the tomcat users, and the old tomcat directory
+# Deletes the tomcat users, the old tomcat directory and the upstart script
 #
 set -e
 
@@ -11,3 +11,4 @@ else
 fi
 
 rm -rf /var/lib/tomcat
+rm -f /etc/init/tomcat.conf
