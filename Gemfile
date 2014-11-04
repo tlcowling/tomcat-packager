@@ -6,3 +6,5 @@ gem 'progressbar'
 
 gem 'highline'
 gem 'rspec'
+
+gem 'pleaserun'
